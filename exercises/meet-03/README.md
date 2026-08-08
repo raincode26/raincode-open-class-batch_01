@@ -1,97 +1,110 @@
-# Pertemuan 3 — Membangun Aplikasi Pertama
+# Pertemuan 03 — Data, MySQL, dan CRUD
 
-Flask · SQLite · CRUD. Minggu lalu form-mu hidup di browser tapi datanya
-selalu hilang begitu halaman ditutup. Minggu ini, form itu benar-benar
-**mengingat** — tersimpan, bisa dilihat lagi, diubah, dihapus. Project
-akhirnya: **Expense Tracker**, aplikasi pencatat pengeluaran sungguhan.
+Di Pertemuan 01 kamu belajar mengolah data dengan Python. Di Pertemuan 02 kamu membuat form dan menampilkan data di browser. Sekarang kita akan menjawab satu pertanyaan baru: **bagaimana membuat data tetap ada setelah program berhenti?**
 
-Bahannya sudah kamu punya:
+Benang merah latihan ini adalah **RainCode Expense Tracker** dengan data:
 
-| Modal dari... | Dipakai lagi di... |
-|---|---|
-| Pertemuan 1 — variabel, if-else, function | Logika di dalam route Flask |
-| Pertemuan 2 — HTML form, CSS | Halaman yang mengirim & menampilkan data |
-| **Baru minggu ini** | Flask (jembatan) + SQLite (ingatan) |
+- Kopi Susu — Rp25.000
+- Makan Siang — Rp35.000
+- Transport — Rp15.000
 
-## Model Mental Kunci
+Kali ini kita sengaja tidak menggunakan Flask. Fokus exercise adalah memahami data, memory, SQL, CRUD, dan bagaimana Python berkomunikasi dengan MySQL.
+Interface terminal membantu kita melihat logikanya tanpa menambah layer baru.
 
-Setiap aplikasi, sehebat apa pun, hanya melakukan tiga hal:
+## Urutan pengerjaan
 
+| Urutan | Folder | Fokus |
+|---:|---|---|
+| 0 | [00-warm-up](00-warm-up) | Tebak output dan recall Python |
+| 1 | [01-representasi-data](01-representasi-data) | Variable → dictionary → list |
+| 2 | [02-memory-crud](02-memory-crud) | CREATE, READ, UPDATE, DELETE di memory |
+| 3 | [03-memory-vs-persistent](03-memory-vs-persistent) | Mengapa kita membutuhkan database |
+| 4 | [04-mysql-sql](04-mysql-sql) | Setup MySQL dan SQL CRUD langsung |
+| 5 | [05-python-mysql](05-python-mysql) | Connection, cursor, fetch, commit |
+| 6 | [06-debugging](06-debugging) | Lima bug data dan MySQL |
+| 7 | [07-final-challenge](07-final-challenge) | Expense Tracker CLI bertahap |
+| 8 | [08-bonus](08-bonus) | Kategori dan total pengeluaran |
+| — | [answers](answers) | Pembanding setelah mencoba sendiri |
+
+Gunakan alur belajar berikut pada setiap file:
+
+```text
+LIHAT → TEBAK → JALANKAN → UBAH → AMATI → JELASKAN
 ```
-INPUT (form)  →  PROCESS (Flask + Python)  →  OUTPUT (halaman terisi)
+
+## Setup Python
+
+Pastikan Python tersedia:
+
+```powershell
+python --version
 ```
 
-Dan seperti restoran: **Frontend** = pelanggan (yang dilihat),
-**Flask** = pelayan (jembatan), **Python** = dapur (olah data),
-**SQLite** = gudang (simpan data). Data pergi ke database, lalu
-**pulang** lagi ke layar — itulah cara semua aplikasi bekerja.
+Buat virtual environment dari folder `meet-03`:
 
-## Urutan Belajar
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
 
-Setiap folder membangun folder sebelumnya — ini **satu** Expense
-Tracker yang tumbuh sedikit demi sedikit, bukan 16 contoh terpisah.
+Salin konfigurasi database:
 
-| # | Folder | Yang ditambahkan | Alur |
-|---|---|---|---|
-| 1 | [01-flask-hello-world](01-flask-hello-world) | Aplikasi Flask 6 baris pertama | Fondasi |
-| 2 | [02-route](02-route) | Banyak alamat halaman (`route`) | Fondasi |
-| 3 | [03-template-render](03-template-render) | HTML lewat `render_template` + Jinja | Fondasi |
-| 4 | [04-form-request](04-form-request) | Menerima data form via `request` | Fondasi |
-| 5 | [05-sqlite-basic](05-sqlite-basic) | SQLite tanpa Flask dulu — koneksi & query | Database |
-| 6 | [06-create-table](06-create-table) | Tabel `transactions` di dalam Flask | CRUD dimulai |
-| 7 | [07-create-expense](07-create-expense) | **C**reate — simpan pengeluaran baru | CRUD |
-| 8 | [08-read-expense](08-read-expense) | **R**ead — tampilkan daftar pengeluaran | CRUD |
-| 9 | [09-update-expense](09-update-expense) | **U**pdate — edit pengeluaran | CRUD |
-| 10 | [10-delete-expense](10-delete-expense) | **D**elete — hapus pengeluaran | CRUD |
-| 11 | [11-complete-crud](11-complete-crud) | Full CRUD + kolom kategori & tanggal | CRUD selesai |
-| 12 | [12-read-source-code](12-read-source-code) | Membaca `projects/expense-tracker/final` (project nyata) | Membaca kode |
-| 13 | [13-debugging](13-debugging) | 6 error umum Flask & cara membacanya | Debugging |
-| 14 | [14-buggy](14-buggy) | Cari & perbaiki 6 bug Flask+SQLite realistis | Debugging |
-| 15 | [15-challenge](15-challenge) | Easy → Medium → Hard | Uji diri |
-| 16 | [16-solution](16-solution) | Kunci jawaban seluruh challenge | Pembanding |
+```powershell
+Copy-Item .env.example .env
+```
 
-## Cara Menjalankan
+Isi `DB_PASSWORD` sesuai MySQL lokalmu. Jangan memasukkan `.env` atau password
+asli ke Git.
 
-Setiap folder dari `06-create-table` seterusnya adalah aplikasi Flask
-mandiri (`app.py` + `templates/`). Tidak ada langkah tersembunyi.
+## Setup MySQL
 
-1. **Sekali saja** di awal — pasang Flask:
-   ```
-   pip install flask
-   ```
-2. Masuk ke folder latihan yang ingin dikerjakan.
-3. Jalankan:
-   ```
-   python app.py
-   ```
-4. Buka `http://localhost:5000` di browser.
-5. Berhenti server dengan `Ctrl+C` di terminal.
+Tool utama yang disarankan adalah **MySQL Workbench**, sama seperti live class.
+Alternatifnya, query yang sama dapat dijalankan lewat terminal MySQL.
 
-File database (`expense_tracker.db`) dibuat **otomatis** saat aplikasi
-pertama kali jalan — kamu tidak perlu membuatnya manual.
+1. Pastikan MySQL Server berjalan.
+2. Buka `04-mysql-sql/setup.sql` di MySQL Workbench.
+3. Jalankan seluruh isi file.
+4. Pastikan schema `raincode_expense` dan table `transactions` muncul.
+5. Lanjutkan ke `04-mysql-sql/exercise.sql`.
 
-## Prinsip Belajar
+Melalui terminal:
 
-- **Konsep dulu, syntax nanti.** Kamu tidak perlu hafal kode Flask —
-  cukup paham alurnya: form → Flask → Python → SQLite → Python →
-  HTML → layar.
-- **Aplikasi itu tidak ajaib.** Ia hanya menyimpan & menampilkan data.
-  Itu saja intinya.
-- **Error tetap teman.** Sama seperti Pertemuan 1 & 2 — baca pesannya
-  dari baris paling bawah, itu peta menuju solusi, bukan hukuman.
-- **`WHERE` adalah aturan emas.** `UPDATE`/`DELETE` tanpa `WHERE`
-  mengubah/menghapus **seluruh tabel**. Selalu double-check.
-- **`14-buggy` sebelum `15-challenge`.** Kebiasaan membaca &
-  memperbaiki kode orang lain adalah bekal sebelum menulis dari nol.
+```powershell
+mysql -u root -p < 04-mysql-sql/setup.sql
+```
 
-## Checklist Sebelum Lanjut ke Pertemuan 4
+## Jika connection gagal
 
-- [ ] Paham Flask sebagai jembatan HTML ↔ Python (`route`, `@app.route`, `app.run()`).
-- [ ] Bisa membaca & menulis `render_template` + Jinja (`{% for %}`, `{{ }}`, `{% if %}`).
-- [ ] Bisa mengambil data form lewat `request.form`.
-- [ ] Hafal 4 operasi CRUD & perintah SQL pasangannya (Create=INSERT, Read=SELECT, Update=UPDATE, Delete=DELETE).
-- [ ] Paham kenapa `db.commit()` wajib setelah INSERT/UPDATE/DELETE.
-- [ ] Bisa membaca alur satu aksi ("klik Simpan") menembus HTML → Flask → SQLite → HTML lagi.
-- [ ] Bisa menentukan lapisan mana yang bermasalah saat ada error.
+Periksa satu per satu:
+
+- MySQL Server sudah berjalan;
+- `DB_HOST` dan `DB_PORT` benar;
+- `DB_USER` dan `DB_PASSWORD` benar;
+- database `raincode_expense` sudah dibuat;
+- user memiliki permission untuk database tersebut;
+- file `.env` berada di folder `meet-03`.
+
+Jangan mengubah banyak bagian sekaligus. Baca pesan error, periksa satu penyebab,
+lalu jalankan kembali.
+
+## Aturan latihan
+
+- Tulis prediksi sebelum menekan Run.
+- Kerjakan TODO dari atas ke bawah.
+- Maksimal gunakan tiga hint sebelum membuka jawaban.
+- Jalankan SELECT untuk membuktikan hasil INSERT, UPDATE, atau DELETE.
+- UPDATE dan DELETE harus menargetkan row dengan `WHERE`.
+- Buka `answers/` setelah mencoba sendiri minimal 15–20 menit.
+
+## Target akhir
+
+- [ ] Bisa membuat dan memanipulasi list of dictionaries.
+- [ ] Bisa menjelaskan CRUD di memory.
+- [ ] Bisa menjalankan CRUD SQL langsung di MySQL.
+- [ ] Bisa membaca hasil MySQL sebagai list of dictionaries Python.
+- [ ] Memahami connection, cursor, fetch, parameter, dan commit.
+- [ ] Bisa menelusuri bug sederhana berdasarkan gejalanya.
+- [ ] Bisa menyelesaikan Expense Tracker CLI tanpa Flask.
 
 RainCode Open Class · Understand before memorizing.
