@@ -1,0 +1,58 @@
+<!-- templates/index.html -->
+<!-- Solusi Challenge Medium — Filter Kategori -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Tracker</title>
+</head>
+<body>
+
+    <h1>Expense Tracker</h1>
+
+    <form action="/tambah" method="POST">
+        <input type="text" name="nama" placeholder="Nama pengeluaran" required>
+        <input type="number" name="nominal" placeholder="Nominal" required>
+        <select name="kategori" required>
+            <option value="Makanan">Makanan</option>
+            <option value="Transportasi">Transportasi</option>
+            <option value="Belanja">Belanja</option>
+            <option value="Tagihan">Tagihan</option>
+            <option value="Hiburan">Hiburan</option>
+            <option value="Lainnya">Lainnya</option>
+        </select>
+        <input type="date" name="tanggal" required>
+        <button type="submit">Simpan</button>
+    </form>
+
+    <h2>Filter</h2>
+    <form action="/" method="GET">
+        <select name="kategori">
+            <option value="" {% if not kategori_filter %}selected{% endif %}>Semua Kategori</option>
+            <option value="Makanan" {% if kategori_filter == 'Makanan' %}selected{% endif %}>Makanan</option>
+            <option value="Transportasi" {% if kategori_filter == 'Transportasi' %}selected{% endif %}>Transportasi</option>
+            <option value="Belanja" {% if kategori_filter == 'Belanja' %}selected{% endif %}>Belanja</option>
+            <option value="Tagihan" {% if kategori_filter == 'Tagihan' %}selected{% endif %}>Tagihan</option>
+            <option value="Hiburan" {% if kategori_filter == 'Hiburan' %}selected{% endif %}>Hiburan</option>
+            <option value="Lainnya" {% if kategori_filter == 'Lainnya' %}selected{% endif %}>Lainnya</option>
+        </select>
+        <button type="submit">Tampilkan</button>
+    </form>
+
+    <h2>
+        Daftar Pengeluaran
+        {% if kategori_filter %}(kategori: {{ kategori_filter }}){% endif %}
+    </h2>
+    {% if data %}
+        <ul>
+        {% for t in data %}
+            <li>{{ t.nama }} — Rp {{ t.nominal }} &middot; {{ t.kategori }}
+                &middot; <a href="/hapus/{{ t.id }}">Hapus</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Tidak ada transaksi untuk filter ini.</p>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!-- templates/index.html -->
+<!-- Solusi Challenge Hard -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Tracker</title>
+</head>
+<body>
+
+    <h1>Expense Tracker</h1>
+    <p><a href="/ringkasan">Lihat Ringkasan &rarr;</a></p>
+
+    <form action="/tambah" method="POST">
+        <input type="text" name="nama" placeholder="Nama pengeluaran" required>
+        <input type="number" name="nominal" placeholder="Nominal" required>
+        <select name="kategori" required>
+            <option value="Makanan">Makanan</option>
+            <option value="Transportasi">Transportasi</option>
+            <option value="Belanja">Belanja</option>
+            <option value="Tagihan">Tagihan</option>
+            <option value="Hiburan">Hiburan</option>
+            <option value="Lainnya">Lainnya</option>
+        </select>
+        <input type="date" name="tanggal" required>
+        <button type="submit">Simpan</button>
+    </form>
+
+    <h2>Daftar Pengeluaran</h2>
+    {% if data %}
+        <ul>
+        {% for t in data %}
+            <li>{{ t.nama }} — Rp {{ t.nominal }} &middot; {{ t.kategori }} &middot; {{ t.tanggal }}
+                &middot; <a href="/hapus/{{ t.id }}">Hapus</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Belum ada transaksi. Isi form di atas untuk mulai.</p>
+    {% endif %}
+
+</body>
+</html>

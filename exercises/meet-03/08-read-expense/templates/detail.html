@@ -1,0 +1,24 @@
+<!-- templates/detail.html -->
+<!-- Topik: Read — menampilkan satu baris data (dari SELECT ... WHERE) -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengeluaran</title>
+</head>
+<body>
+
+    <h1>Detail Pengeluaran</h1>
+
+    {% if item %}
+        <p>ID: {{ item.id }}</p>
+        <p>Nama: {{ item.nama }}</p>
+        <p>Nominal: Rp {{ item.nominal }}</p>
+    {% else %}
+        <p>Transaksi dengan id ini tidak ditemukan.</p>
+    {% endif %}
+
+    <a href="/">&larr; Kembali ke daftar</a>
+
+</body>
+</html>

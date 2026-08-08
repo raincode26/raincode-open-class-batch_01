@@ -1,0 +1,57 @@
+/* static/style.css */
+body {
+    font-family: Arial;
+    max-width: 640px;
+    margin: 40px auto;
+    color: #1f2937;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.flash {
+    background: #fef3c7;
+    padding: 8px 12px;
+    border-radius: 6px;
+    list-style: none;
+}
+
+.empty-state {
+    color: #6b7280;
+    font-style: italic;
+}
+
+form.inline {
+    display: inline;
+}
+
+form.filter input, form.filter select {
+    margin-right: 8px;
+}
+
+.kategori {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* TODO 2: beri warna berbeda untuk tiap class kategori-... di bawah.
+   Nama class-nya sudah menunggu di TODO 1 (index.html) — huruf kecil
+   semua, sesuai isi kategori (Food/Transport/Bills/Entertainment/Other
+   yang sudah di-lower lewat filter |lower Jinja).
+   Pola:
+     .kategori-food          { background: #ffedd5; color: #9a3412; }
+     .kategori-transport     { background: #dbeafe; color: #1e40af; }
+     .kategori-bills         { background: #fee2e2; color: #991b1b; }
+     .kategori-entertainment { background: #ede9fe; color: #5b21b6; }
+     .kategori-other         { background: #f3f4f6; color: #374151; }
+*/

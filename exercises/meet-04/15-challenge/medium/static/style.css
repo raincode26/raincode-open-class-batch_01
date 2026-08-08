@@ -1,0 +1,39 @@
+/* static/style.css */
+body {
+    font-family: Arial;
+    max-width: 640px;
+    margin: 40px auto;
+    color: #1f2937;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.flash {
+    background: #fef3c7;
+    padding: 8px 12px;
+    border-radius: 6px;
+    list-style: none;
+}
+
+.empty-state {
+    color: #6b7280;
+    font-style: italic;
+}
+
+form.inline {
+    display: inline;
+}
+
+form.filter input, form.filter select {
+    margin-right: 8px;
+}

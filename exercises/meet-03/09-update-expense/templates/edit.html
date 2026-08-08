@@ -1,0 +1,29 @@
+<!-- templates/edit.html -->
+<!-- Topik: Update — form ini TERISI data lama, bukan kosong -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Pengeluaran</title>
+</head>
+<body>
+
+    <h1>Edit Pengeluaran</h1>
+
+    {% if item %}
+        <!-- Perhatikan atribut "value" -> mengisi form dengan data
+             yang SUDAH ADA, bukan form kosong seperti di tambah. -->
+        <form action="/edit/{{ item.id }}" method="POST">
+            <input type="text" name="nama" value="{{ item.nama }}" required>
+            <input type="number" name="nominal" value="{{ item.nominal }}" required>
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    {% else %}
+        <p>Transaksi dengan id ini tidak ditemukan.</p>
+    {% endif %}
+
+    <br>
+    <a href="/">&larr; Batal, kembali ke daftar</a>
+
+</body>
+</html>

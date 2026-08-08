@@ -1,0 +1,25 @@
+<!-- templates/detail.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pengeluaran</title>
+</head>
+<body>
+
+    <h1>Detail Pengeluaran</h1>
+
+    {% if item %}
+        <p>ID: {{ item.id }}</p>
+        <p>Nama: {{ item.nama }}</p>
+        <p>Nominal: Rp {{ item.nominal }}</p>
+        <a href="/edit/{{ item.id }}">Edit transaksi ini</a>
+    {% else %}
+        <p>Transaksi dengan id ini tidak ditemukan.</p>
+    {% endif %}
+
+    <br><br>
+    <a href="/">&larr; Kembali ke daftar</a>
+
+</body>
+</html>

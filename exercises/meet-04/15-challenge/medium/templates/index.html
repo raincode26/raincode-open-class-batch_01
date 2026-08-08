@@ -1,0 +1,54 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <p><a href="/create">+ Tambah Expense</a></p>
+
+    <form action="/" method="GET" class="filter">
+        <input type="text" name="search" placeholder="Cari judul..." value="{{ search }}">
+        <select name="category">
+            <option value="">Semua Kategori</option>
+            {% for c in categories %}
+                <option value="{{ c }}" {% if c == category %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <p>Total: Rp {{ total }}</p>
+
+    {% if expenses %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Created At</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in expenses %}
+                <tr>
+                    <td>{{ e.title }}</td>
+                    <td>Rp {{ e.amount }}</td>
+                    <td>{{ e.category }}</td>
+                    <td>{{ e.created_at }}</td>
+                    <td>
+                        <a href="/edit/{{ e.id }}">Edit</a>
+                        &middot;
+                        <form action="/delete/{{ e.id }}" method="POST" class="inline">
+                            <button type="submit">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="empty-state">Belum ada expense. Klik "+ Tambah Expense" untuk mulai.</p>
+    {% endif %}
+
+{% endblock %}
