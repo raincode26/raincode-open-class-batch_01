@@ -1,37 +1,3 @@
-# requirements.txt — Python Package Dependencies
-# ================================================
-#
-# WHY THIS FILE EXISTS:
-#   This file lists every external Python package the project needs.
-#   When someone (or a server) sets up the project, they run:
-#       pip install -r requirements.txt
-#   This installs all the right packages at the right versions.
-#
-# PACKAGE EXPLANATION:
-#
-#   flask==3.1.3
-#     The web framework. Handles HTTP routing, templates, sessions.
-#     Flask is "micro" — minimal by design, add only what you need.
-#
-#   python-dotenv==1.1.1
-#     Reads .env files and loads them into environment variables.
-#     Lets us use config values without hardcoding them.
-#
-#   mysql-connector-python==9.7.0
-#     Official MySQL driver used by the database and repository layers.
-#
-# PIN YOUR VERSIONS:
-#   We use == to pin exact versions (flask==3.1.3 not flask).
-#   This ensures everyone gets the SAME version.
-#   "It works on my machine" problems usually come from version differences.
-#
-# TO INSTALL:
-#   pip install -r requirements.txt
-#
-# TO UPDATE requirements.txt after adding a new package:
-#   pip freeze > requirements.txt
-#   (Then review the output — pip freeze includes indirect dependencies too)
-
 flask==3.1.3
 python-dotenv==1.1.1
 mysql-connector-python==9.7.0

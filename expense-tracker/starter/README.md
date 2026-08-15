@@ -2,11 +2,9 @@
 
 Ini bukan latihan folder-per-folder seperti `exercises/meet-03`.
 Ini adalah versi sederhana yang langsung dapat dijalankan. Tujuannya agar kamu
-dapat melihat hubungan antara API, aturan bisnis, dan query SQL tanpa harus
-melewati Repository Pattern terlebih dahulu.
+dapat melihat hubungan antara API, aturan bisnis, dan query SQL secara langsung.
 
-Anggap ini ujian akhir informal: kalau kamu bisa menyelesaikan ini
-Alurnya dibuat pendek dan eksplisit:
+Anggap ini latihan akhir informal. Alurnya dibuat pendek dan eksplisit:
 
 ```text
 Route (app.py) -> Service + Query SQL -> db.execute() -> MySQL
@@ -24,9 +22,8 @@ Route (app.py) -> Service + Query SQL -> db.execute() -> MySQL
 | `services/expense_service.py` | Business logic dan query SQL per use case/API |
 | `app.py` | Route Flask: dashboard, list, create, edit, delete, summary |
 
-Repository sengaja belum digunakan pada versi ini. Setelah memahami hubungan
-Route, Service, query, dan Database, buka versi `../final` untuk melihat query
-dipindahkan ke Repository Layer.
+Setelah memahami hubungan Route, Service, query, dan Database, buka versi
+`../final` untuk melihat implementasi yang sudah lengkap dengan alur yang sama.
 
 ## Cara Membaca Kode
 
@@ -77,7 +74,7 @@ MySQL pada `.env` benar.
 2. Tambahkan filter tanggal dengan parameterized query.
 3. Tambahkan satu kategori pada Model dan coba membuat expense.
 4. Buat query total pengeluaran per bulan.
-5. Bandingkan Service ini dengan Repository pada versi `../final`.
+5. Bandingkan TODO starter dengan implementasi lengkap pada versi `../final`.
 
 ## Checklist
 
@@ -89,8 +86,7 @@ MySQL pada `.env` benar.
 
 ## Hasil Akhir
 
-Setelah versi sederhana ini dipahami, lanjut ke `../final` untuk mempelajari
-alur **Route → Service → Repository → Database** dan alasan query dipisahkan dari
-business logic pada aplikasi yang lebih besar.
+Setelah versi starter dipahami, lanjut ke `../final` dan ikuti kembali alur
+**Route → Service/query → db.execute() → MySQL** pada implementasi lengkap.
 
 RainCode Open Class · Understand before memorizing.

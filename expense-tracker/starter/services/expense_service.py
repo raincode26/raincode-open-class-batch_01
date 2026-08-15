@@ -4,8 +4,7 @@ Pada versi ini query sengaja diletakkan dekat dengan use case agar mudah dibaca:
 
     Route -> ExpenseService -> db.execute(query, params)
 
-Versi `final` menunjukkan langkah berikutnya, yaitu memindahkan query-query ini
-ke Repository Layer.
+Versi `final` memakai alur yang sama dalam bentuk implementasi lengkap.
 """
 
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
